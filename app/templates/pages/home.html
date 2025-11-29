@@ -1,0 +1,339 @@
+{% extends 'base.html' %} {% block header %}
+<h2>{% block title %} Home Recipe {% endblock title %}</h2>
+{% endblock header %} {% block content %}
+<!-- Hero -->
+<section >
+  <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 lg:px-8 mt-14">
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 md:items-center md:gap-8">
+      <div >
+        <div class="max-w-lg md:max-w-none">
+          <h2 class="text-2xl font-semibold text-gray-900 sm:text-4xl leading-loose">Temukan Hidangan Impian dengan <span class="text-pink-500 font-semibold">Resep Lezat Kami!</span></h2>
+
+          <p class="mt-4 text-gray-700 text-sm mb-4">Tingkatkan keahlian memasakmu dengan resep penuh cita rasa, jelajahi dunia kelezatan yang tak terbatas mulai hari ini.</p>
+        </div>
+        <div class="flex items-center gap-4 flex-wrap">
+            <!-- Tombol Explore Food -->
+            <a href="#rekomendasi"
+              type="button"
+              class="text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+              data-ripple-dark="light"
+            >
+              Lihat Makanan
+            </a>
+          
+            <!-- Form Pencarian -->
+            <form class="flex-1">
+              <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">
+                Search
+              </label>
+              <div class="relative">
+                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#5f6368"><path d="M0 0h24v24H0z" fill="none"/><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+    
+                </div>
+                <form method="GET" action="/" class="relative">
+                  <input
+                    type="search"
+                    name="query"
+                    class="block w-full p-3 ps-8 text-xs text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-pink-400 focus:border-pink-400 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-400 dark:focus:border-pink-400"
+                    placeholder="Yuk cari resep favorit kamu!"
+                    required
+                  />
+                  <button
+                    type="submit"
+                    data-ripple-dark="light"
+                    class="text-white absolute end-2.5 bottom-1 bg-pink-400 hover:bg-pink-500 focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-xs px-3 py-2 dark:bg-pink-500 dark:hover:bg-pink-500 dark:focus:ring-pink-500"
+                  >
+                    Search
+                  </button>
+                </form>                
+              </div>
+            </form>
+          </div>
+          
+          
+
+      </div>
+
+      <div class="relative flex items-center justify-center">
+        <img
+          src="/static/img/nasgor.png"
+          alt="sate"
+          class="relative rounded-lg w-11/12 h-full z-10 transform -translate-x-8"
+        />
+      </div>
+      
+  </div>
+</section>
+<!-- Akhir Hero -->
+
+<!-- Sorotan -->
+<section class="bg-amber-50">
+    <div class="container mt-4 mx-auto px-4 ">
+        <div class="flex flex-col items-center justify-center overflow-hidden mb-6" data-aos="fade-down" data-aos-duration="1000" data-aos-delay="200">
+            <h1 class="text-4xl font-extrabold pt-5 pb-2 text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-600 relative">
+              Sorotan
+              <span class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-pink-600 rounded-full"></span>
+            </h1>
+            <p class="text-gray-700 text-center text-base leading-relaxed max-w-xl px-6 bg-gray-100 py-3 rounded-lg shadow-md">
+              Sorotan makanan untuk hari ini.. Cobain yuk!
+            </p>
+          </div>
+          {% for item in sorotan %}
+          <div class="card lg:card-side bg-pink-50 shadow-md border-4 border-transparent animate-border-move gap-4 p-4 overflow-hidden" data-aos="fade-right" data-aos-duration="1000" data-aos-delay="200">
+            <figure class="relative">
+                <div class="badge absolute top-2 left-2 bg-gradient-to-r from-blue-500 via-teal-500 to-green-500 text-white font-bold px-2 py-1 rounded-md shadow-md">
+                    Sorotan
+                  </div>
+                  
+              <img
+              src="{{ url_for('static', filename='uploads/lumpia' + item.gambar_sorotan.split('/')[-1]) }}" 
+              alt="{{ item.nama_sorotan }}" 
+              class="w-72 h-60 object-cover" 
+            
+              />
+            </figure>
+            <div class="flex-grow flex flex-col gap-4">
+              <h2 class="text-lg font-bold text-gray-800">
+                {{ item.nama_sorotan }}
+              </h2>
+              <p class="text-sm text-gray-600">
+                {{ item.deskripsi_sorotan }}
+              </p>
+              <p class="text-sm text-gray-600">
+                Kategori: {{ item.kategori.nama_kategori }}
+              </p>
+              <!-- Info tambahan -->
+              <div class="flex items-center justify-between text-sm text-gray-500">
+                
+                <div class="flex items-center text-sm text-gray-500">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6h4" />
+                    <circle cx="12" cy="12" r="10" />
+                  </svg>
+                  Waktu Masak: <span class="ml-2 font-semibold">{{ item.waktu_sorotan }} Menit</span>
+                </div>
+              </div>
+              
+
+              <div class="text-sm italic text-gray-600">
+                Oleh: <span class="font-semibold text-gray-800">{{ item.pembuat.nama if item.pembuat else 'Anonim' }}</span>
+              </div>
+              <div class="flex justify-end gap-2 mt-8">
+                <a href="{{ url_for('details', jenis='sorotan', id=item.id) }}" class="flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800" data-ripple-light="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor" class="mr-2"><path d="M480-320q75 0 127.5-52.5T660-500q0-75-52.5-127.5T480-680q-75 0-127.5 52.5T300-500q0 75 52.5 127.5T480-320Zm0-72q-45 0-76.5-31.5T372-500q0-45 31.5-76.5T480-608q45 0 76.5 31.5T588-500q0 45-31.5 76.5T480-392Zm0 192q-146 0-266-81.5T40-500q54-137 174-218.5T480-800q146 0 266 81.5T920-500q-54 137-174 218.5T480-200Zm0-300Zm0 220q113 0 207.5-59.5T832-500q-50-101-144.5-160.5T480-720q-113 0-207.5 59.5T128-500q50 101 144.5 160.5T480-280Z"/></svg>
+                    Detail
+                  </a>                
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+          
+    </div>
+</section>
+<!-- Akhir Sorotan -->
+
+<!-- Populer -->
+<section class="bg-amber-50">
+    <div class="container py-4 mx-auto px-4">
+        <div class="flex flex-col justify-start overflow-hidden mb-6" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+            <!-- Judul Paling Populer -->
+            <h1 class="text-4xl font-extrabold pt-5 pb-2 text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 to-red-500 relative">
+              Pilihan Master Chef
+              <!-- Garis Dekoratif di Bawah Judul -->
+              <span class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-500 to-red-500 rounded-full"></span>
+            </h1>
+          
+            <!-- Deskripsi -->
+            <p class="text-gray-800 text-left text-base leading-relaxed max-w-lg px-6 py-3">
+              Makanan pilihan chef minggu ini!
+          </div>
+          
+          
+            <div class="relative max-w-6xl mx-auto py-6">
+                <!-- Tombol Panah Kiri -->
+                <button id="prevBtn" class="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 bg-gray-200 p-2 rounded-full shadow-md hover:bg-gray-300">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+              
+                <!-- Container Cards -->
+                <div id="cardWrapper" class="w-full overflow-hidden">
+                  <div id="cardContainer" class="grid grid-flow-col auto-cols-[calc(33%-10px)] gap-4 transition-transform duration-300">
+                    {% for item in resep_top_pick %}
+                    <!-- Card 1 -->
+                    <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700 overflow-hidden" data-aos="flip-left" data-aos-duration="1000" data-aos-delay="200">
+                        <!-- Gambar Makanan -->
+                         <div class="relative">
+                            <div class="badge absolute top-2 left-2 bg-red-500 text-white font-bold px-2 py-1 rounded-md">
+                                Pilihan Chef
+                              </div>
+                            <img class="rounded-t-lg w-full h-48 object-cover" src="{{ url_for('static', filename='uploads/' + item.gambar.split('/')[-1]) }}" 
+                             alt="{{ item.nama_sorotan }}" />
+                         </div>
+                      
+                        <div class="p-5">
+                          <!-- Judul Makanan -->
+                          <h5 class="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">{{ item.nama_resep }}</h5>
+                      
+                          <!-- Informasi Jumlah Likes, Oleh Siapa -->
+                          <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-3">
+                            <!-- Kategori -->
+                            <div class="mr-4">
+                                <span class="font-medium text-gray-700 dark:text-gray-300">Kategori:</span>
+                                <span class="ml-1 text-gray-600 dark:text-gray-400">{{ item.kategori.nama_kategori }}</span>
+                            </div>
+                        
+                            <!-- Separator -->
+                            <span class="mx-2 text-gray-400">|</span>
+                        
+                            <!-- Pembuat -->
+                            <div>
+                                <span class="font-medium text-gray-700 dark:text-gray-300">Oleh:</span>
+                                <span class="ml-1 text-gray-600 dark:text-gray-400">{{ item.pembuat.nama if item.pembuat else 'Anonim' }}</span>
+                            </div>
+                          </div>
+                        
+                        
+                      
+                          <!-- Waktu Masak -->
+                          <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6h4" />
+                              <circle cx="12" cy="12" r="10" />
+                            </svg>
+                            <span>Waktu Masak: {{ item.waktu_masak }} Menit</span>
+                          </div>
+                      
+                          <!-- Tombol -->
+                          <div class="flex items-center justify-between">
+                            <!-- Tombol Detail -->
+                            <a href="{{ url_for('details', jenis='resep', id=item.id) }}" class="flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800"               data-ripple-dark="light"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor" class="mr-2"><path d="M480-320q75 0 127.5-52.5T660-500q0-75-52.5-127.5T480-680q-75 0-127.5 52.5T300-500q0 75 52.5 127.5T480-320Zm0-72q-45 0-76.5-31.5T372-500q0-45 31.5-76.5T480-608q45 0 76.5 31.5T588-500q0 45-31.5 76.5T480-392Zm0 192q-146 0-266-81.5T40-500q54-137 174-218.5T480-800q146 0 266 81.5T920-500q-54 137-174 218.5T480-200Zm0-300Zm0 220q113 0 207.5-59.5T832-500q-50-101-144.5-160.5T480-720q-113 0-207.5 59.5T128-500q50 101 144.5 160.5T480-280Z"/></svg>
+                                Detail
+                              </a>
+                              
+                      
+                            <!-- Tombol Favorit -->
+                            <button class="flex items-center px-4 py-2 text-sm font-medium text-red-600 bg-white border border-red-500 rounded-lg hover:bg-red-100 focus:ring-4 focus:outline-none focus:ring-red-300" onclick="tambahFavorit('{{ item.id }}')"       data-ripple-dark="light"
+                            >
+                              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                              </svg>
+                              Favorit
+                            </button>
+                          </div>
+                        </div>
+                    </div>
+              
+                    {% endfor %}
+                  </div>
+                </div>
+              
+                <!-- Tombol Panah Kanan -->
+                <button id="nextBtn" class="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 bg-gray-200 p-2 rounded-full shadow-md hover:bg-gray-300">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+            </div>  
+    </div>
+ </section>
+<!-- Akhir Populer -->
+
+<!-- Rekomendasi -->
+<section id="rekomendasi" class="bg-amber-50">
+    <div class="container py-0 mx-auto px-4">
+        <div class="flex flex-col justify-start mb-6 overflow-hidden" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+            <!-- Judul Rekomendasi -->
+            <h1 class="text-4xl font-extrabold pt-5 pb-2 text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-600 relative">
+              Rekomendasi
+              <!-- Garis Dekoratif di Bawah Judul -->
+              <span class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full"></span>
+            </h1>
+          
+            <!-- Deskripsi -->
+            <p class="text-gray-800 text-left text-base leading-relaxed max-w-lg px-6 py-3">
+              Rekomendasi makanan lainnya yang ga kalah enak lhoo! Temukan pilihan lezat yang akan menggugah selera kamu.
+            </p>
+          </div>
+          
+        <div class="grid grid-cols-3 items-center justify-center gap-4">
+          {% for item in resep %}
+            <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700 overflow-hidden" data-aos="flip-left" data-aos-duration="1000" data-aos-delay="200">
+                <!-- Gambar Makanan -->
+                <img class="rounded-t-lg w-full h-48 object-cover" src="{{ url_for('static', filename='uploads/' + item.gambar.split('/')[-1]) }}" 
+                alt="{{ resep.nama_resep }}" />
+                <div class="p-5">
+                  <!-- Judul Makanan -->
+                  <h5 class="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">{{ item.nama_resep }}</h5>
+              
+                  <!-- Informasi Jumlah Likes, Oleh Siapa -->
+                  <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-3">
+                    <!-- Kategori -->
+                    <div class="mr-4">
+                        <span class="font-medium text-gray-700 dark:text-gray-300">Kategori:</span>
+                        <span class="ml-1 text-gray-600 dark:text-gray-400">{{ item.kategori.nama_kategori }}</span>
+                    </div>
+                
+                    <!-- Separator -->
+                    <span class="mx-2 text-gray-400">|</span>
+                
+                    <!-- Pembuat -->
+                    <div>
+                        <span class="font-medium text-gray-700 dark:text-gray-300">Oleh:</span>
+                        <span class="ml-1 text-gray-600 dark:text-gray-400">{{ item.pembuat.nama if item.pembuat else 'Anonim' }}</span>
+                    </div>
+                </div>
+                
+              
+                  <!-- Waktu Masak -->
+                  <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6h4" />
+                      <circle cx="12" cy="12" r="10" />
+                    </svg>
+                    <span>Waktu Masak: {{ item.waktu_masak }} Menit</span>
+                  </div>
+              
+                  <!-- Tombol -->
+                  <div class="flex items-center justify-between">
+                    <!-- Tombol Detail -->
+                    <a href="{{ url_for('details', jenis='resep', id=item.id) }}" class="flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor" class="mr-2"><path d="M480-320q75 0 127.5-52.5T660-500q0-75-52.5-127.5T480-680q-75 0-127.5 52.5T300-500q0 75 52.5 127.5T480-320Zm0-72q-45 0-76.5-31.5T372-500q0-45 31.5-76.5T480-608q45 0 76.5 31.5T588-500q0 45-31.5 76.5T480-392Zm0 192q-146 0-266-81.5T40-500q54-137 174-218.5T480-800q146 0 266 81.5T920-500q-54 137-174 218.5T480-200Zm0-300Zm0 220q113 0 207.5-59.5T832-500q-50-101-144.5-160.5T480-720q-113 0-207.5 59.5T128-500q50 101 144.5 160.5T480-280Z"/></svg>
+                        Detail
+                      </a>
+                      
+              
+                    <!-- Tombol Favorit -->
+                    <button class="flex items-center px-4 py-2 text-sm font-medium text-red-600 bg-white border border-red-500 rounded-lg hover:bg-red-100 focus:ring-4 focus:outline-none focus:ring-red-300" onclick="tambahFavorit('{{ item.id }}')">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                      </svg>
+                      Favorit
+                    </button>
+                  </div>
+                </div>
+            </div>
+          {% endfor %}
+        </div>
+    </div>
+        <div class="py-4 mx-auto flex items-center justify-center">
+            <a href="/kategori"
+                type="button"
+                class="btn text-white bg-pink-500 hover:bg-pink-600 focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                data-ripple-dark="true"
+                >
+                Lainnya...
+            </a>
+        </div>
+          
+    </div>
+    
+</section>
+<!-- Rekomendasi -->
+
+
+{% endblock content %}

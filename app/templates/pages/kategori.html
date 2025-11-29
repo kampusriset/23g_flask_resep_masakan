@@ -1,0 +1,98 @@
+{% extends 'base.html' %} {% block header %}
+<h2>{% block title %} Kategori Recipe {% endblock title %}</h2>
+{% endblock header %} {% block content %}
+
+<section class="bg-amber-50">
+  <div class="container mx-auto px-4 py-8 mt-10">
+    <!-- Judul -->
+    <h1 class="text-3xl text-center font-bold mb-2" data-aos="flip-up" data-aos-duration="1000" data-aos-delay="200">Kategori Makanan</h1>
+    <p class="text-gray-800 text-center text-base leading-relaxed max-w-lg mx-auto px-6 py-2" data-aos="flip-down" data-aos-duration="1000" data-aos-delay="200">Cari makanan sesuai seleramu!!</p>
+
+    <!-- Tombol Filter -->
+    <div class="flex justify-center flex-wrap gap-4 mb-8" data-aos="flip-left" data-aos-duration="1000" data-aos-delay="200">
+      <button class="filter-btn px-4 py-2 bg-gray-200 text-gray-700 text-sm font-medium rounded-lg shadow hover:bg-gray-300" data-filter="all" id="allButton">Semua</button>
+      {% for kategori in kategori_list %}
+      <button class="filter-btn px-4 py-2 bg-gray-200 text-gray-700 text-sm font-medium rounded-lg shadow hover:bg-gray-300" data-filter="{{ kategori.id }}">{{ kategori.nama_kategori }}</button>
+      {% endfor %}
+    </div>
+
+    {% for kategori in kategori_list %}
+    <section class="category-section" data-category="{{ kategori.id }}">
+      <div class="flex flex-col justify-start mb-6" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">
+        <!-- Judul Kategori -->
+        <h1 class="text-4xl font-extrabold pt-5 pb-2 text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 to-red-500 relative">
+          {{ kategori.nama_kategori }}
+          <span class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-500 to-red-500 rounded-full"></span>
+        </h1>
+
+        <!-- Deskripsi Kategori -->
+        <p class="text-gray-800 text-left text-base leading-relaxed max-w-lg px-6 py-1">Resep terbaik dari kategori ini.</p>
+      </div>
+
+      <!-- Container Cards -->
+      <div id="cardWrapper" class="w-full overflow-hidden">
+        <div id="cardContainer" class="grid grid-flow-col auto-cols-[calc(33%-10px)] gap-4 transition-transform duration-300">
+          {% for resep in resep_list %} {% if resep.kategori_id == kategori.id %}
+          <!-- Card for each recipe -->
+          <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700" data-aos="flip-left" data-aos-duration="1000" data-aos-delay="200">
+            <!-- Gambar Makanan -->
+            <img class="rounded-t-lg w-full h-48 object-cover" src="{{ url_for('static', filename='uploads/' + resep.gambar.split('/')[-1]) }}" alt="{{ resep.nama_resep }}" />
+
+            <div class="p-5">
+              <h5 class="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">{{ resep.nama_resep }}</h5>
+              <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-3">
+                <!-- Kategori -->
+                <div class="mr-2">
+                  <span class="font-medium text-gray-700 dark:text-gray-300">Kategori:</span>
+                  <span class="text-gray-600 dark:text-gray-400">{{ kategori.nama_kategori }}</span>
+                </div>
+
+                <!-- Separator -->
+                <span class="text-gray-400">|</span>
+
+                <!-- Pembuat -->
+                <div>
+                  <span class="font-medium text-gray-700 dark:text-gray-300">Oleh:</span>
+                  <span class="ml-1 text-gray-600 dark:text-gray-400">{{ resep.oleh }}</span>
+                </div>
+              </div>
+
+              <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-3">
+                <span>Waktu Masak: {{ resep.waktu_masak }} Menit</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <!-- Tombol Detail -->
+                <a
+                  href="{{ url_for('details', jenis='resep', id=resep.id) }}"
+                  class="flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor" class="mr-2">
+                    <path
+                      d="M480-320q75 0 127.5-52.5T660-500q0-75-52.5-127.5T480-680q-75 0-127.5 52.5T300-500q0 75 52.5 127.5T480-320Zm0-72q-45 0-76.5-31.5T372-500q0-45 31.5-76.5T480-608q45 0 76.5 31.5T588-500q0 45-31.5 76.5T480-392Zm0 192q-146 0-266-81.5T40-500q54-137 174-218.5T480-800q146 0 266 81.5T920-500q-54 137-174 218.5T480-200Zm0-300Zm0 220q113 0 207.5-59.5T832-500q-50-101-144.5-160.5T480-720q-113 0-207.5 59.5T128-500q50 101 144.5 160.5T480-280Z"
+                    />
+                  </svg>
+                  Detail
+                </a>
+
+                <!-- Tombol Favorit -->
+                <button
+                  class="flex items-center px-4 py-2 text-sm font-medium text-red-600 bg-white border border-red-500 rounded-lg hover:bg-red-100 focus:ring-4 focus:outline-none focus:ring-red-300"
+                  onclick="tambahFavorit('{{ resep.id }}')"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                  </svg>
+                  Favorit
+                </button>
+              </div>
+            </div>
+          </div>
+          {% endif %} {% endfor %}
+        </div>
+      </div>
+    </section>
+    {% endfor %}
+  </div>
+</section>
+
+{% endblock content %}

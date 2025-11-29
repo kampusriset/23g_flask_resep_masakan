@@ -1,0 +1,62 @@
+{% extends 'base.html' %} {% block header %}
+<h2>{% block title %} Profil Saya {% endblock title %}</h2>
+{% endblock header %} {% block content %}
+<section id="about-us" class="bg-amber-50 py-4 mb-16">
+  <div class="container mx-auto max-w-6xl px-4 py-8 mt-10">
+    <div class="text-center mb-12" data-aos="flip-down" data-aos-duration="1000" data-aos-delay="200">
+      <h1 class="text-4xl font-bold text-gray-800" data-aos="flip-" data-aos-duration="1000" data-aos-delay="200">Tentang <span class="text-pink-500">Cook</span>ify</h1>
+      <p class="text-gray-600 mt-4"><span class="text-pink-500">Cook</span>ify adalah platform resep masakan yang dirancang untuk membantu Anda menemukan, berbagi, dan membuat hidangan favorit Anda dengan mudah.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+      <!-- Gambar -->
+      <div class="flex justify-center" data-aos="flip-right" data-aos-duration="1000" data-aos-delay="200">
+        <img src="/static/img/aboutus.png" alt="Tentang Cookify" class="rounded-lg shadow-lg w-full md:max-w-md" />
+      </div>
+
+      <!-- Deskripsi -->
+      <div data-aos="fade-right" data-aos-duration="1000" data-aos-delay="200">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Misi Kami</h2>
+        <p class="text-gray-600 leading-relaxed">Di <span class="text-pink-500">Cook</span>ify, kami percaya bahwa memasak adalah seni yang bisa dinikmati semua orang. Misi kami adalah:</p>
+        <ul class="mt-4 list-disc list-inside text-gray-600 space-y-2">
+          <li>Membantu Anda menemukan inspirasi memasak dari berbagai resep.</li>
+          <li>Menyediakan platform untuk berbagi kreasi masakan Anda.</li>
+          <li>Memberikan tips memasak yang mudah diikuti oleh siapa saja.</li>
+        </ul>
+
+        <h2 class="text-2xl font-bold text-gray-800 mt-8 mb-4">Kenapa Memilih <span class="text-pink-500">Cook</span>ify?</h2>
+        <p class="text-gray-600 leading-relaxed">
+          Kami menawarkan ribuan resep berkualitas, fitur penyimpanan resep favorit. Dengan Cookify, perjalanan memasak Anda menjadi lebih menyenangkan!
+        </p>
+      </div>
+    </div>
+
+    <!-- Tim -->
+    <div class="mt-12">
+      <h2 class="text-3xl font-bold text-gray-800 text-center mb-6" data-aos="flip-up" data-aos-duration="1000" data-aos-delay="200">Tim Kami</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8" data-aos="flip-left" data-aos-duration="1000" data-aos-delay="200">
+        <!-- Anggota Tim 1 -->
+        <div class="flex flex-col items-center text-center">
+          <img src="/static/img/dilla.jpg" alt="Tim" class="w-32 h-32 rounded-full shadow-lg mb-4 object-cover" />
+          <h3 class="text-lg font-bold text-gray-800">Ardilla</h3>
+          <p class="text-gray-600 text-sm">Tuan Putri</p>
+        </div>
+
+        <!-- Anggota Tim 2 -->
+        <div class="flex flex-col items-center text-center">
+          <img src="/static/img/karina.jpg" alt="Tim" class="w-32 h-32 rounded-full shadow-lg mb-4 object-cover" />
+          <h3 class="text-lg font-bold text-gray-800">Rina Putri</h3>
+          <p class="text-gray-600 text-sm">Food Content Creator</p>
+        </div>
+
+        <!-- Anggota Tim 3 -->
+        <div class="flex flex-col items-center text-center">
+          <img src="/static/img/budi.jpg" alt="Tim" class="w-32 h-32 rounded-full shadow-lg mb-4 object-cover" />
+          <h3 class="text-lg font-bold text-gray-800">David Santoso</h3>
+          <p class="text-gray-600 text-sm">Selebrity Chef</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}

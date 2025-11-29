@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <title>{% block title %}{% endblock title %}</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="flex min-h-screen items-center justify-center bg-gray-100 dark:bg-gray-900">
+      <div class="w-full overflow-hidden rounded-lg bg-white shadow-xl dark:bg-gray-800 sm:w-2/3 lg:w-1/2">
+        <!-- Form -->
+        <div class="w-full">
+          <div class="p-8">
+            <h1 class="text-4xl font-bold text-slate-700 dark:text-white">Masuk</h1>
+            <p class="mt-2 mb-5 text-base text-gray-600 dark:text-gray-300 leading-relaxed">
+              Masuk untuk eksplorasi resep-resep terbaik dan buat resep terbaik kamu di
+              <span class="font-semibold"><span class="text-pink-500">Cook</span>ify</span>.
+            </p>
+
+            <form class="mt-8" action="/admin/masuk" method="POST">
+              <!-- Input Email -->
+              <div class="relative mt-2 w-full">
+                <input
+                  type="email"
+                  id="email"
+                  class="peer block w-full appearance-none rounded-lg border border-gray-300 bg-transparent px-2.5 pb-2.5 pt-4 text-sm text-gray-900 dark:text-white dark:bg-gray-700 dark:border-gray-600 focus:border-pink-500 focus:outline-none focus:ring-0"
+                  placeholder=" "
+                  required
+                  name="email"
+                />
+                <label
+                  for="email"
+                  class="absolute top-2 left-2 z-10 -translate-y-4 scale-75 transform bg-white px-2 text-sm text-gray-500 dark:bg-gray-800 dark:text-gray-400 duration-300 peer-placeholder-shown:translate-y-1/2 peer-placeholder-shown:scale-100 peer-placeholder-shown:top-1/2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-pink-500"
+                >
+                  Email Anda
+                </label>
+              </div>
+
+              <!-- Input Password -->
+              <div class="relative mt-2 w-full">
+                <input
+                  type="password"
+                  id="password"
+                  class="peer block w-full appearance-none rounded-lg border border-gray-300 bg-transparent px-2.5 pb-2.5 pt-4 text-sm text-gray-900 dark:text-white dark:bg-gray-700 dark:border-gray-600 focus:border-pink-500 focus:outline-none focus:ring-0"
+                  placeholder=" "
+                  required
+                  name="password"
+                />
+                <label
+                  for="password"
+                  class="absolute top-2 left-2 z-10 -translate-y-4 scale-75 transform bg-white px-2 text-sm text-gray-500 dark:bg-gray-800 dark:text-gray-400 duration-300 peer-placeholder-shown:translate-y-1/2 peer-placeholder-shown:scale-100 peer-placeholder-shown:top-1/2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-pink-500"
+                >
+                  Password Anda
+                </label>
+              </div>
+
+              <!-- Tombol Submit -->
+              <button
+                class="mt-6 w-full rounded-lg bg-gradient-to-r from-pink-500 to-purple-400 py-3 text-white font-medium shadow-lg hover:bg-gradient-to-l hover:from-purple-400 hover:to-pink-500 focus:ring-4 focus:ring-pink-300"
+                data-ripple-dark="true"
+              >
+                Masuk
+              </button>
+            </form>
+
+            <!-- Link ke Login -->
+            <div class="mt-6 text-center">
+              <p class="text-sm text-gray-600 dark:text-gray-400">
+                Belum punya akun?
+                <a href="/admin/daftar" class="font-bold text-pink-500 hover:text-pink-300"> Daftar di sini </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script async defer src="https://unpkg.com/@material-tailwind/html@latest/scripts/ripple.js"></script>
+  </body>
+</html>

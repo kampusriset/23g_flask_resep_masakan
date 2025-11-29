@@ -1,0 +1,132 @@
+{% extends 'base.html' %} {% block header %}
+<h2>{% block title %} Hasil Pencarian {% endblock title %}</h2>
+{% endblock header %} {% block content %} 
+<section>
+    <div class="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 lg:px-8 mt-14">
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-2 md:items-center md:gap-8">
+        <div>
+          <div class="max-w-lg md:max-w-none">
+            <h2 class="text-2xl font-semibold text-gray-900 sm:text-4xl leading-loose">Discover Your New Favorite Dish With Our <span class="text-pink-500 font-semibold">Tasty Recipes!!</span></h2>
+  
+            <p class="mt-4 text-gray-700 text-sm mb-4">Elevate your culinary game with our flavorful recipes, explore a world of delicious possibilities today.</p>
+          </div>
+          <div class="flex items-center gap-4 flex-wrap">
+              <!-- Tombol Explore Food -->
+              <a href="#rekomendasi"
+                type="button"
+                class="text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                data-ripple-dark="true"
+              >
+                Explore Food
+              </a>
+            
+              <!-- Form Pencarian -->
+              <form class="flex-1">
+                <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">
+                  Search
+                </label>
+                <div class="relative">
+                  <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                    
+                  </div>
+                  <form method="GET" action="/" class="relative">
+                    <input
+                      type="search"
+                      name="query"
+                      class="block w-full p-3 ps-8 text-xs text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-pink-400 focus:border-pink-400 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-pink-400 dark:focus:border-pink-400"
+                      placeholder="Cari makanan favoritmu..."
+                      required
+                    />
+                    <button
+                      type="submit"
+                      class="text-white absolute end-2.5 bottom-1 bg-pink-400 hover:bg-pink-500 focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-xs px-3 py-2 dark:bg-pink-500 dark:hover:bg-pink-500 dark:focus:ring-pink-500"
+                    >
+                      Search
+                    </button>
+                  </form>                
+                </div>
+              </form>
+            </div>
+            
+            
+  
+        </div>
+  
+        <div class="relative flex items-center justify-center">
+          <img
+            src="/static/img/nasgor.png"
+            alt="sate"
+            class="relative rounded-lg w-11/12 h-full z-10 transform -translate-x-8"
+          />
+        </div>
+        
+    </div>
+  </section>
+{% if query %}
+<div class="container mx-auto py-4">
+    <h1 class="text-2xl font-bold text-gray-700 mb-4">Hasil Pencarian untuk "{{ query }}"</h1>
+
+    {% if results %}
+    <div class="grid grid-cols-3 gap-4">
+      {% for item in results %}
+      <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700">
+        <!-- Gambar Makanan -->
+            <img class="rounded-t-lg w-full h-48 object-cover" src="{{ url_for('static', filename='uploads/' + item.gambar.split('/')[-1]) }}" 
+             alt="{{ item.nama_sorotan }}" />
+      
+        <div class="p-5">
+          <!-- Judul Makanan -->
+          <h5 class="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">{{ item.nama_resep }}</h5>
+      
+          <!-- Informasi Jumlah Likes, Oleh Siapa -->
+          <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-3">
+            <span>Oleh: {{ item.pembuat.nama if item.pembuat else 'Anonim' }}</span>
+          </div>
+      
+          <!-- Waktu Masak -->
+          <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6h4" />
+              <circle cx="12" cy="12" r="10" />
+            </svg>
+            <span>Waktu Masak: {{ item.waktu_masak }} Menit</span>
+          </div>
+      
+          <!-- Tombol -->
+          <div class="flex items-center justify-between">
+            <!-- Tombol Detail -->
+            <a href="{{ url_for('details', jenis='resep', id=item.id) }}" class="flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor" class="mr-2"><path d="M480-320q75 0 127.5-52.5T660-500q0-75-52.5-127.5T480-680q-75 0-127.5 52.5T300-500q0 75 52.5 127.5T480-320Zm0-72q-45 0-76.5-31.5T372-500q0-45 31.5-76.5T480-608q45 0 76.5 31.5T588-500q0 45-31.5 76.5T480-392Zm0 192q-146 0-266-81.5T40-500q54-137 174-218.5T480-800q146 0 266 81.5T920-500q-54 137-174 218.5T480-200Zm0-300Zm0 220q113 0 207.5-59.5T832-500q-50-101-144.5-160.5T480-720q-113 0-207.5 59.5T128-500q50 101 144.5 160.5T480-280Z"/></svg>
+                Detail
+              </a>
+              
+      
+            <!-- Tombol Favorit -->
+            <button class="flex items-center px-4 py-2 text-sm font-medium text-red-600 bg-white border border-red-500 rounded-lg hover:bg-red-100 focus:ring-4 focus:outline-none focus:ring-red-300" onclick="tambahFavorit('{{ item.id }}')">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+              </svg>
+              Favorit
+            </button>
+          </div>
+        </div>
+    </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-gray-500">Tidak ada resep yang cocok dengan pencarian "{{ query }}".</p>
+{% endif %} {% else %} 
+
+{% endif %}
+<div class="py-4 mx-auto flex items-center justify-center">
+    <a href="/"
+        type="button"
+        class="btn text-white bg-pink-500 hover:bg-pink-600 focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+        data-ripple-dark="true"
+        >
+        Kembali ke Beranda
+    </a>
+</div>
+</div>
+
+ {% endblock content %}
