@@ -16,4 +16,4 @@ class Kategori(db.Model):
     )
 
     def __repr__(self):
-        return f"<Kategori {self.id}>"
+        return f"<Kategori {self.id}>"   
