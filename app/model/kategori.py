@@ -1,13 +1,19 @@
-from app import db
 from datetime import datetime
+from app import db
+
 
 class Kategori(db.Model):
-    id = db.Column(db.BigInteger, primary_key=True, autoincrement=True)
+    __tablename__ = "kategori"  # disarankan agar tabel jelas
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nama_kategori = db.Column(db.String(250), nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    updated_at = db.Column(
+        db.DateTime,
+        default=datetime.utcnow,
+        onupdate=datetime.utcnow,
+        nullable=False
+    )
 
     def __repr__(self):
-        return "<Kategori {}>".format(self.id)
-
-    
+        return f"<Kategori {self.id}>"
