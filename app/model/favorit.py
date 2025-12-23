@@ -14,4 +14,4 @@ class Favorit(db.Model):
     resep = db.relationship('Resep', backref=db.backref('favorits', lazy='dynamic'))
 
     def __repr__(self):
-        return f"<Favorit User: {self.user_id}, Resep: {self.resep_id}>"
+        return f"<Favorit User: {self.user_id}, Resep: {self.resep_id}>" 
