@@ -4,7 +4,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 
 class User(db.Model):
-    id = db.Column(db.BigInteger, primary_key=True, autoincrement=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     nama = db.Column(db.String(250), nullable=False)
     email = db.Column(db.String(100),  nullable=False)
     password = db.Column(db.String(250), nullable=False)

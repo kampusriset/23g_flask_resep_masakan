@@ -9,7 +9,7 @@ class Config(object):
     USERNAME = os.environ.get("DB_USERNAME", "root")
     PASSWORD = os.environ.get("DB_PASSWORD", "")
 
-    SQLALCHEMY_DATABASE_URI = f"mysql+pymysql://{USERNAME}:{PASSWORD}@{HOST}:{PORT}/{DATABASE}"
+    SQLALCHEMY_DATABASE_URI = f"sqlite:///{os.path.join(basedir, 'cookify.db')}"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_RECORD_QUERIES = True
     
