@@ -6,6 +6,7 @@ from app.model.user import User
 from app.model.sorotan import Sorotan
 from app import app, response, db
 from flask import request, jsonify, session, render_template, redirect, url_for, flash
+from functools import wraps
 
 # Path untuk menyimpan gambar
 UPLOAD_FOLDER = 'app/static/uploads'
@@ -198,3 +199,24 @@ def details(jenis, id):
         flash(f"Gagal memuat data: {str(e)}", "danger")
         return redirect(url_for('index'))
     
+
+def resep_admin():
+    """Menampilkan daftar resep di halaman admin"""
+    try:
+        # Ambil semua resep beserta relasinya
+        reseps = Resep.query.options(
+            db.joinedload(Resep.kategori),
+            db.joinedload(Resep.pembuat)
+        ).all()
+        
+        # Ambil daftar kategori untuk form filter/tambah
+        kategoris = Kategori.query.all()
+        
+        return render_template(
+            'admin/resep.html',
+            reseps=reseps,
+            kategoris=kategoris
+        )
+    except Exception as e:
+        flash(f'Gagal memuat data resep: {str(e)}', 'danger')
+        return redirect(url_for('admin'))

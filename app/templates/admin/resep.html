@@ -128,9 +128,32 @@
           <!-- End of Topbar -->
 
           <div class="container mt-5">
-            <h2 class="font-weight-bold text-black">Data Resep <span style="color: rgb(219 39 119)">Cook</span>pedia</h2>
-            <!-- Button trigger modal for adding data -->
-            <button type="button" class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#modalTambahData"><b>+</b> Tambah Resep</button>
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="alert alert-{{ 'success' if category == 'success' else 'danger' }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+            
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center align-items-start mb-4">
+              <h2 class="font-weight-bold text-black mb-3 mb-md-0">Data Resep <span style="color: rgb(219 39 119)">Cook</span>pedia</h2>
+              <div class="text-md-right">
+                <a href="{{ url_for('export_resep_excel') }}" class="btn btn-outline-primary mr-2 mb-2">
+                  <i class="fas fa-file-excel mr-1"></i> Unduh Excel
+                </a>
+                <a href="{{ url_for('export_resep_pdf') }}" class="btn btn-outline-danger mr-2 mb-2">
+                  <i class="fas fa-file-pdf mr-1"></i> Unduh PDF
+                </a>
+                <button type="button" class="btn btn-success mb-2" data-bs-toggle="modal" data-bs-target="#modalTambahData">
+                  <i class="fas fa-plus mr-1"></i> Tambah Resep
+                </button>
+              </div>
+            </div>
 
             <!-- Tabel data sorotan -->
             <table class="table table-bordered table-striped table-hover">
@@ -164,16 +187,16 @@
                     <button class="btn btn-warning btn-sm mb-1" data-bs-toggle="modal" data-bs-target="#modalEditData{{ resep.id }}">Edit</button>
 
                     <!-- Tombol Hapus -->
-                    <form method="POST" action="{{ url_for('deleteResep', id=resep.id) }}" style="display: inline">
-                      <button type="submit" class="btn btn-danger mb-1 btn-sm" onclick="return confirm('Yakin ingin menghapus resep ini?')">Hapus</button>
+                    <form method="POST" action="{{ url_for('deleteResep', id=resep.id) }}" style="display: inline" onsubmit="return confirm('Yakin ingin menghapus resep ini?');">
+                      <button type="submit" class="btn btn-danger mb-1 btn-sm">Hapus</button>
                     </form>
 
                     {% if resep.is_top_pick %}
-                    <form method="POST" action="{{ url_for('hapusPick', id=resep.id) }}" style="display: inline">
+                    <form method="POST" action="{{ url_for('remove_resep_top_pick', id=resep.id) }}" style="display: inline">
                       <button type="submit" class="btn btn-secondary btn-sm">Hapus Top</button>
                     </form>
                   {% else %}
-                    <form method="POST" action="{{ url_for('topPick', id=resep.id) }}" style="display: inline">
+                    <form method="POST" action="{{ url_for('set_resep_top_pick', id=resep.id) }}" style="display: inline">
                       <button type="submit" class="btn btn-success btn-sm">Tandai Top</button>
                     </form>
                   {% endif %}
@@ -253,7 +276,7 @@
                 <h5 class="modal-title" id="modalTambahLabel">Tambah Resep Cookpedia</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-              <form method="POST" action="{{ url_for('saveResep') }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ url_for('saveResep') }}" enctype="multipart/form-data" onsubmit="return validateForm(this);">
                 <div class="modal-body">
                   <!-- Nama Resep -->
                   <div class="mb-3">
@@ -340,6 +363,54 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{{ url_for('static', filename='js/sb-admin-2.min.js') }}"></script>
+    
+    <!-- Custom JavaScript for form validation -->
+    <script>
+      function validateForm(form) {
+        // Validasi file gambar
+        const fileInput = form.querySelector('input[type="file"]');
+        if (fileInput && fileInput.files.length > 0) {
+          const file = fileInput.files[0];
+          const allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+          const fileExtension = file.name.split('.').pop().toLowerCase();
+          
+          if (!allowedExtensions.includes(fileExtension)) {
+            alert('Format file tidak didukung. Harap unggah file gambar (JPG, JPEG, PNG, GIF)');
+            return false;
+          }
+          
+          // Validasi ukuran file (maks 5MB)
+          const maxSize = 5 * 1024 * 1024; // 5MB
+          if (file.size > maxSize) {
+            alert('Ukuran file terlalu besar. Maksimal 5MB');
+            return false;
+          }
+        }
+        
+        // Validasi field required
+        const requiredFields = form.querySelectorAll('[required]');
+        for (let field of requiredFields) {
+          if (!field.value.trim()) {
+            alert(`Kolom ${field.labels[0].textContent} harus diisi`);
+            field.focus();
+            return false;
+          }
+        }
+        
+        return true;
+      }
+      
+      // Auto-hide alerts after 5 seconds
+      document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(function() {
+          const alerts = document.querySelectorAll('.alert');
+          alerts.forEach(function(alert) {
+            const bsAlert = new bootstrap.Alert(alert);
+            bsAlert.close();
+          });
+        }, 5000);
+      });
+    </script>
 
     <!-- Page level plugins -->
     <script src="{{ url_for('static', filename='vendor/chart.js/Chart.min.js') }}"></script>
