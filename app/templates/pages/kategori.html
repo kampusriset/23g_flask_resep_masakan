@@ -60,7 +60,7 @@
               <div class="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-3">
                 <span>Waktu Masak: {{ resep.waktu_masak }} Menit</span>
               </div>
-              <div class="flex items-center justify-between">
+              <div class="flex items-center justify-between flex-wrap gap-2">
                 <!-- Tombol Detail -->
                 <a
                   href="{{ url_for('details', jenis='resep', id=resep.id) }}"
@@ -84,6 +84,12 @@
                   </svg>
                   Favorit
                 </button>
+                <a href="{{ url_for('export_single_resep_excel', resep_id=resep.id) }}" class="flex items-center px-3 py-2 text-xs font-medium text-green-700 bg-green-100 hover:bg-green-200 rounded-lg">
+                  <i class="fas fa-file-excel mr-1"></i> Excel
+                </a>
+                <a href="{{ url_for('export_single_resep_pdf', resep_id=resep.id) }}" class="flex items-center px-3 py-2 text-xs font-medium text-red-600 bg-red-100 hover:bg-red-200 rounded-lg">
+                  <i class="fas fa-file-pdf mr-1"></i> PDF
+                </a>
               </div>
             </div>
           </div>
