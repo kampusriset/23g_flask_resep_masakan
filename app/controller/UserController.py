@@ -68,21 +68,28 @@ def buatUser():
             return redirect(url_for('register'))  # Jika ada kesalahan, kembali ke form
         
 def login():
-        email = request.form['email']
-        password = request.form['password']
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+        
+        if not email or not password:
+            flash('Email dan password harus diisi!', 'error')
+            return render_template('pages/login.html')
+            
         user = User.query.filter_by(email=email).first()
 
         if user and user.checkPassword(password):
-            if user.role == 'user':  # Cek apakah pengguna adalah user
-                session['user_id'] = user.id  # Simpan id user ke session
+            if user.role == 'user':
+                session['user_id'] = user.id
+                session['is_admin'] = False
                 flash('Login berhasil!', 'success')
-                return redirect(url_for('index'))  # Redirect ke halaman home untuk user
+                return redirect(url_for('index'))
             else:
-                flash('Akses ditolak! Anda bukan pengguna biasa.', 'danger')
-                return redirect(url_for('login'))
+                flash('Akses ditolak! Gunakan halaman admin untuk login.', 'error')
         else:
-            flash('Email atau password salah!', 'danger')
-            return redirect(url_for('login'))
+            flash('Email atau password salah!', 'error')
+    
+    return render_template('pages/login.html')
         
 def logout():
     session.pop('user_id', None)

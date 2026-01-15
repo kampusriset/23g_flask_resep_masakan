@@ -32,6 +32,39 @@
               Masuk untuk eksplorasi resep-resep terbaik dan buat resep terbaik kamu di <span class="font-semibold"><span class="text-pink-500">Cook</span>ify</span>.
             </p>
 
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <div class="mb-4">
+              {% for category, message in messages %}
+              <div class="p-4 mb-3 rounded-lg flex items-center bg-red-50 text-red-800 border-l-4 border-red-600 shadow-md">
+                <i class="fas fa-exclamation-triangle mr-3 text-red-600"></i>
+                <span class="font-medium">{{ message }}</span>
+                <button type="button" class="ml-auto text-red-400 hover:text-red-600" onclick="this.parentElement.remove()">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+              {% endfor %}
+            </div>
+            {% endif %}
+            {% endwith %}
+            
+            <style>
+              @keyframes slideIn {
+                from {
+                  opacity: 0;
+                  transform: translateY(-10px);
+                }
+                to {
+                  opacity: 1;
+                  transform: translateY(0);
+                }
+              }
+              
+              .mb-4 > div {
+                animation: slideIn 0.3s ease-out;
+              }
+            </style>
+
             <form class="mt-8" action="/login" method="POST">
               <!-- Input Email -->
               <div class="relative mt-2 w-full">

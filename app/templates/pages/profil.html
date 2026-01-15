@@ -45,7 +45,7 @@
               </div>
 
               <!-- Tombol -->
-              <div class="flex items-center justify-between">
+              <div class="flex items-center justify-between flex-wrap gap-2">
                 <!-- Tombol Detail -->
                 <a
                   href="{{ url_for('details', jenis='resep', id=resep.id) }}"
@@ -69,6 +69,12 @@
                   </svg>
                   Hapus Favorit
                 </button>
+                <a href="{{ url_for('export_single_resep_excel', resep_id=resep.id) }}" class="flex items-center px-3 py-2 text-xs font-medium text-green-700 bg-green-100 hover:bg-green-200 rounded-lg">
+                  <i class="fas fa-file-excel mr-1"></i> Excel
+                </a>
+                <a href="{{ url_for('export_single_resep_pdf', resep_id=resep.id) }}" class="flex items-center px-3 py-2 text-xs font-medium text-red-600 bg-red-100 hover:bg-red-200 rounded-lg">
+                  <i class="fas fa-file-pdf mr-1"></i> PDF
+                </a>
               </div>
             </div>
           </div>
@@ -87,7 +93,7 @@
 
   <!-- Section 2: Resep yang Dibuat -->
   <section id="my-recipes" class="bg-white p-6 rounded-lg shadow-md">
-    <div class="flex justify-between items-center mb-4">
+    <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 mb-4">
       <h2 class="text-2xl font-bold text-gray-800" data-aos="fade-left" data-aos-duration="1000" data-aos-delay="200">Resep Anda</h2>
       <button id="create-recipe-btn" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700">Buat Resep</button>
     </div>
@@ -202,6 +208,15 @@
     </svg>
     Detail
   </a>
+
+  <div class="flex items-center justify-center gap-2 w-full">
+    <a href="{{ url_for('export_single_resep_excel', resep_id=resep.id) }}" class="flex items-center px-3 py-2 text-xs font-medium text-green-700 bg-green-100 hover:bg-green-200 rounded-lg">
+      <i class="fas fa-file-excel mr-1"></i> Excel
+    </a>
+    <a href="{{ url_for('export_single_resep_pdf', resep_id=resep.id) }}" class="flex items-center px-3 py-2 text-xs font-medium text-red-600 bg-red-100 hover:bg-red-200 rounded-lg">
+      <i class="fas fa-file-pdf mr-1"></i> PDF
+    </a>
+  </div>
 
   <!-- Tombol Edit + Hapus (berjejer) -->
   <div class="flex

@@ -3,23 +3,43 @@ from app import app, response, db
 from flask import request, session, render_template, redirect, url_for, flash
 
 def topPick(id):
-    if 'is_admin' not in session or not session['is_admin']:
-        url_for('masuk')  # Hanya admin yang bisa mengakses
+    """Menandai resep sebagai top pick"""
+    if 'user_id' not in session or 'is_admin' not in session or not session['is_admin']:
+        flash('Anda tidak memiliki izin untuk melakukan aksi ini', 'danger')
+        return redirect(url_for('masuk'))
     
-    resep = Resep.query.get_or_404(id)
-    resep.is_top_pick = True  # Menandai resep sebagai Top Pick
-    db.session.commit()  # Simpan perubahan ke database
+    try:
+        resep = Resep.query.get_or_404(id)
+        resep.is_top_pick = True
+        db.session.commit()
+        flash('Resep berhasil ditandai sebagai Top Pick!', 'success')
+    except Exception as e:
+        db.session.rollback()
+        flash(f'Gagal menandai resep: {str(e)}', 'danger')
     
-    flash('Resep berhasil ditandai sebagai Top Pick!', 'success')
     return redirect(url_for('resep'))
 
 def hapusPick(id):
-    if 'is_admin' not in session or not session['is_admin']:
-        url_for('masuk')  # Hanya admin yang bisa mengakses
+    """Menghapus status top pick dari resep"""
+    if 'user_id' not in session or 'is_admin' not in session or not session['is_admin']:
+        flash('Anda tidak memiliki izin untuk melakukan aksi ini', 'danger')
+        return redirect(url_for('masuk'))
     
-    resep = Resep.query.get_or_404(id)
-    resep.is_top_pick = False  # Menghapus status Top Pick
-    db.session.commit()  # Simpan perubahan ke database
+    try:
+        resep = Resep.query.get_or_404(id)
+        resep.is_top_pick = False
+        db.session.commit()
+        flash('Status Top Pick berhasil dihapus!', 'info')
+    except Exception as e:
+        db.session.rollback()
+        flash(f'Gagal menghapus status Top Pick: {str(e)}', 'danger')
     
-    flash('Status Top Pick berhasil dihapus!', 'info')
     return redirect(url_for('resep'))
+
+def set_top_pick(id):
+    """API untuk menandai resep sebagai top pick"""
+    return topPick(id)
+
+def remove_top_pick(id):
+    """API untuk menghapus status top pick"""
+    return hapusPick(id)
