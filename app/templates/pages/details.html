@@ -73,11 +73,14 @@
           <!-- Cara Memasak -->
           <div>
             <h2 class="text-lg font-bold text-gray-700 mb-2">Cara Memasak:</h2>
-            <ol class="list-decimal pl-6 space-y-1 text-sm text-gray-600">
+            <div class="pl-6 space-y-1 text-sm text-gray-600">
               {% for langkah in data['langkah_langkah'] %}
-              <li>{{ langkah }}</li>
+              <div class="flex">
+                <span class="mr-2 font-semibold">{{ loop.index }}.</span>
+                <span>{{ langkah|strip_numbering }}</span>
+              </div>
               {% endfor %}
-            </ol>
+            </div>
           </div>
         </div>
       </div>
