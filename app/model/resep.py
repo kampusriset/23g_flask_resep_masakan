@@ -15,6 +15,8 @@ class Resep(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
+    video_url = db.Column(db.String(500), nullable=True)
+
     kategori = db.relationship('Kategori', backref=db.backref('resep', lazy=True))
     pembuat = db.relationship('User', backref=db.backref('resep', lazy=True))
 

@@ -28,6 +28,8 @@ def saveResep():
         alat_dan_bahan = request.form.get('alat_dan_bahan')
         langkah_langkah = request.form.get('langkah_langkah')
         kategori_id = int(request.form.get('kategori_id'))
+        video_url = request.form.get('video_url')
+
         
         print(f"nama_resep: {nama_resep}, waktu_masak: {waktu_masak}, deskripsi_singkat: {deskripsi_singkat}, alat_dan_bahan: {alat_dan_bahan}, langkah_langkah: {langkah_langkah}, kategori_id: {kategori_id}, gambar: {request.files.get('gambar')}, dibuat_oleh: {session.get('user_id')}")
         
@@ -71,6 +73,8 @@ def updateResep(id):
         resep.alat_dan_bahan = request.form.get('alat_dan_bahan')
         resep.langkah_langkah = request.form.get('langkah_langkah')
         resep.kategori_id = int(request.form.get('kategori_id'))
+        video_url = request.form.get('video_url')
+        resep.video_url = video_url
 
         # Update gambar jika ada file baru
         file = request.files.get('gambar')
